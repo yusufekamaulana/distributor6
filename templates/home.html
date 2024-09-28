@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>SIXEPRESS</title>
+    <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:slnt,wght@-10..0,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}" />
+    <link href="{{ url_for('static', filename='lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        .nav-profile-img img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-profile-text p {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .nav-profile-text span {
+            font-size: 12px;
+            color: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-orange" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar & Hero Start -->
+    <div class="container-fluid nav-bar px-0 py-0">
+        <div class="container">
+            <nav class="navbar navbar-light py-0">
+                <a href="#" class="navbar-brand">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="img-fluid">
+                </a>
+                <div class="navbar ms-auto">
+                    <a class="text-gradient" href="{{ url_for('logout') }}"><i
+                            class="fas fa-sign-out-alt display-6"></i></a>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar & Hero End -->
+
+    <!-- Home page start -->
+
+
+    <div class="container-fluid bg-white py-0">
+        <div class="container py-2">
+            <div class="col-md-12 col-lg-12 text-center">
+                <span class="fw-bold">Hello, {{ session.get('nama_lengkap', 'user') }}</span>
+                <h1 class="display-5 fw-light mb-2">WELCOME TO <span class="text-gradient fw-bold d-inline">SIXPRESS</span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- home page End -->
+
+    <section id="shipment">
+        <!-- Shipment Tracking and Shipping Form Start -->
+        <div class="container-fluid bg-light shipment-section py-2">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <!-- Shipment List Section -->
+                    <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
+                        <div class="shipment-list-content bg-white rounded p-5 h-100 shadow">
+                            <h1 class="display-6 mb-4">Your Shipments</h1>
+
+                            <!-- Shipment Table -->
+                            <table class="table text-center">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tracking Number</th>
+                                        <th>Status</th>
+                                        <th>Shipping Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="shipmentTableBody">
+                                    <!-- Shipment rows will be loaded via JavaScript -->
+                                </tbody>
+                            </table>
+
+                            <!-- Pagination -->
+                            <nav>
+                                <ul class="pagination justify-content-center" id="pagination">
+                                    <!-- Pagination content will be handled via JavaScript -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Form Section -->
+                    <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
+                        <div class="shipping-form-content bg-white rounded p-5 h-100 shadow">
+                            <h1 class="display-6 mb-4">Make New Shipment</h1>
+
+                            <!-- Shipping Form -->
+                            <form id="shippingForm" action="javascript:void(0);">
+                                <div class="mb-3">
+                                    <label for="idPembelian" class="form-label">Purchase ID</label>
+                                    <input type="text" class="form-control" id="idPembelian"
+                                        placeholder="Enter Purchase ID" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="namaPengirim" class="form-label">Sender Name</label>
+                                    <input type="text" class="form-control" id="namaPengirim"
+                                        placeholder="Enter Sender Name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kotaSupplier" class="form-label">Supplier City</label>
+                                    <input type="text" class="form-control" id="kotaSupplier"
+                                        placeholder="Enter Supplier City" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kotaTujuan" class="form-label">Destination City</label>
+                                    <input type="text" class="form-control" id="kotaTujuan"
+                                        placeholder="Enter Destination City" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="packageWeight" class="form-label">Package Weight (kg)</label>
+                                    <input type="number" class="form-control" id="packageWeight"
+                                        placeholder="Enter Package Weight" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="quantity" class="form-label">Number of Packages</label>
+                                    <input type="number" class="form-control" id="quantity"
+                                        placeholder="Enter Number of Packages" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary py-2 px-4">Send Package</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Success Modal -->
+                    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="successModalLabel">Shipment Success</h5>
+                                </div>
+                                <div class="modal-body">
+                                    Your shipment has been successfully created!
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary py-2 px-4"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Shipment Tracking and Shipping Form End -->
+    </section>
+
+    <script>
+        document.getElementById('shippingForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Assuming form is valid, you can handle backend request here
+    
+            // Show success modal
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+    
+            // Reset form after submission
+            this.reset();
+        });
+    </script>
+
+    <script>
+        const shipments = [
+            { no: 1, trackingNumber: '123456789', status: 'Delivered', date: '2024-09-01' },
+            { no: 2, trackingNumber: '987654321', status: 'In Transit', date: '2024-09-03' },
+            { no: 3, trackingNumber: '123456789', status: 'Delivered', date: '2024-09-01' },
+            { no: 4, trackingNumber: '987654321', status: 'In Transit', date: '2024-09-03' },
+            { no: 5, trackingNumber: '123456789', status: 'Delivered', date: '2024-09-01' },
+            { no: 6, trackingNumber: '987654321', status: 'In Transit', date: '2024-09-03' },
+            { no: 7, trackingNumber: '123456789', status: 'Delivered', date: '2024-09-01' },
+            { no: 8, trackingNumber: '987654321', status: 'In Transit', date: '2024-09-03' },
+            { no: 9, trackingNumber: '123456789', status: 'Delivered', date: '2024-09-01' },
+            { no: 10, trackingNumber: '987654321', status: 'In Transit', date: '2024-09-03' },
+            { no: 11, trackingNumber: '123456789', status: 'Delivered', date: '2024-09-01' },
+            { no: 12, trackingNumber: '987654321', status: 'In Transit', date: '2024-09-03' },
+            { no: 13, trackingNumber: '123456789', status: 'Delivered', date: '2024-09-01' },
+            { no: 14, trackingNumber: '987654321', status: 'In Transit', date: '2024-09-03' },
+            { no: 15, trackingNumber: '123456789', status: 'Delivered', date: '2024-09-01' },
+            { no: 16, trackingNumber: '987654321', status: 'In Transit', date: '2024-09-03' },
+
+            // Add as many shipments as needed
+        ];
+
+        const itemsPerPage = 10;
+        let currentPage = 1;
+
+        function renderShipments() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const displayedShipments = shipments.slice(start, end);
+
+            const tableBody = document.getElementById('shipmentTableBody');
+            tableBody.innerHTML = ''; // Clear previous rows
+
+            displayedShipments.forEach(shipment => {
+                let statusLabel = '';
+
+                if (shipment.status === 'Delivered') {
+                    statusLabel = `<span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">Delivered</span>`;
+                } else if (shipment.status === 'In Transit') {
+                    statusLabel = `<span class="bg-red-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">In Progress</span>`;
+                }
+
+                const row = `<tr>
+                                <td>${shipment.no}</td>
+                                <td>${shipment.trackingNumber}</td>
+                                <td>${statusLabel}</td>
+                                <td>${shipment.date}</td>
+                             </tr>`;
+                tableBody.innerHTML += row;
+            });
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(shipments.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = `<li class="page-item ${i === currentPage ? 'active' : ''}">
+                                    <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+                                  </li>`;
+                pagination.innerHTML += pageItem;
+            }
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            renderShipments();
+        }
+
+        // Initial rendering
+        renderShipments();
+    </script>
+
+
+    <section class="py-5 bg-gradient-primary-to-secondary text-white">
+        <div class="container px-5 my-5">
+            <div class="text-center">
+                <h2 class="display-4 fw-bolder mb-4 text-white">Affordable Distribution for Everyone!</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-3 wow fadeIn"
+        style="background: linear-gradient(135deg, #dc3545 0%, #ffcc00 100%);">
+        <div class="container py-3">
+            <div class="row g-4">
+                <div class="col-xl-9">
+                    <div class="row g-0">
+                        <div class="col-12">
+                            <div class="row g-4">
+                                <div class="col-lg-6 col-xl-4">
+                                    <div class="d-flex">
+                                        <div class="btn-xl-square bg-orange text-white rounded p-2 me-3">
+                                            <i class="fas fa-map-marker-alt fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white">Address</h4>
+                                            <p class="mb-0 text-white">Surabaya, Indonesia</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-xl-4">
+                                    <div class="d-flex">
+                                        <div class="btn-xl-square bg-orange text-white rounded p-2 me-3">
+                                            <i class="fas fa-envelope fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white">Mail Us</h4>
+                                            <p class="mb-0 text-white">6xpress@gmail.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-xl-4">
+                                    <div class="d-flex">
+                                        <div class="btn-xl-square bg-orange text-white rounded p-2 me-3">
+                                            <i class="fa fa-phone-alt fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white">Telephone</h4>
+                                            <p class="mb-0 text-white">(+012) 3456 7890</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logo Section -->
+                <div class="col-xl-3 text-center">
+                    <img src="{{ url_for('static', filename='img/logo-white.png') }}" alt="Logo" class="img-fluid"
+                        style="max-width: 150px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-orange btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
